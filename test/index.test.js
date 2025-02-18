@@ -1,11 +1,12 @@
+// test/index.test.js
 const request = require("supertest");
-const app = require("../src/index");
-
-test("GET / should return 'Hello, Docker CI/CD!'", async () => {
-  const res = await request(app).get("/");
-  expect(res.text).toBe("Hello, Docker CI/CD!");
-});
+const { server } = require("../src/index"); // Import server
 
 afterAll(() => {
-  app.close();
+  server.close(); // Đảm bảo đóng server sau khi test xong
+});
+
+test("GET / should return Hello, Docker CI/CD!", async () => {
+  const response = await request(server).get("/");
+  expect(response.text).toBe("Hello, Docker CI/CD!");
 });
